@@ -3,13 +3,14 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Link } from 'react-router-dom';
 
 function EditEmployee() {
     return (
         <Container>
             <Row>
                 <Col><h1>Edit Employee</h1></Col>
-                <Col md="auto"><Button>Return</Button></Col>
+                <Col md="auto"><Link className='btn btn-primary' to='/employees'>Return</Link></Col>
             </Row>
             <Row>
                 <Col>

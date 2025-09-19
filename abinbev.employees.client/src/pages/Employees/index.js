@@ -3,13 +3,14 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Link } from 'react-router-dom';
 
 function Employees() {
     return (
         <Container>
             <Row>
                 <Col><h1>Employees</h1></Col>
-                <Col md="auto"><Button>New</Button></Col>
+                <Col md="auto"><Link className='btn btn-primary' to='/employees/new'>New</Link></Col>
             </Row>
             <Row>
                 <Col>
@@ -28,7 +29,7 @@ function Employees() {
                                 <td>Otto</td>
                                 <td>@mdo</td>
                                 <td>
-                                    <Button>Edit</Button>
+                                    <Link className='btn btn-primary' to='/employees/edit'>Edit</Link>
                                     <Button>Delete</Button>
                                 </td>
                             </tr>
@@ -37,7 +38,7 @@ function Employees() {
                                 <td>Thornton</td>
                                 <td>@fat</td>
                                 <td>
-                                    <Button>Edit</Button>
+                                    <Link className='btn btn-primary' to='/employees/edit'>Edit</Link>
                                     <Button>Delete</Button>
                                 </td>
                             </tr>
@@ -45,7 +46,7 @@ function Employees() {
                                 <td colSpan={2}>Larry the Bird</td>
                                 <td>@twitter</td>
                                 <td>
-                                    <Button>Edit</Button>
+                                    <Link className='btn btn-primary' to='/employees/edit'>Edit</Link>
                                     <Button>Delete</Button>
                                 </td>
                             </tr>
