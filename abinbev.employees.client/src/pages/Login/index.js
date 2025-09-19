@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -11,8 +11,7 @@ import api from '../../services/api';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    // const history = useHistory();
+    const navigate = useNavigate();
 
     async function login(e) {
         e.preventDefault();
@@ -26,6 +25,8 @@ function Login() {
             const response = await api.post('authentication', data);
 
             localStorage.setItem('accessToken', response.data);
+
+            navigate('/employees')
         } catch (error) {
             alert(error.response.data);
         }
