@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import api from '../../../services/api';
 
@@ -13,7 +13,10 @@ function NewEmployee() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [documentNumber, setDocumentNumber] = useState('');
+    const [birthDate, setBirthDate] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
 
     async function createNewEmployee(e) {
         e.preventDefault();
@@ -34,7 +37,7 @@ function NewEmployee() {
                 }
             ],
             password,
-            birthDate: "2000-09-19"
+            birthDate
         };
 
         try {
@@ -48,6 +51,9 @@ function NewEmployee() {
                     }
                 }
             );
+
+
+            navigate('/employees');
 
         } catch (error) {
             alert(error.response.data);
@@ -74,6 +80,10 @@ function NewEmployee() {
                         <Form.Group className="mb-3" controlId="employee.DocumentNumber">
                             <Form.Label>Document Number</Form.Label>
                             <Form.Control type="text" value={documentNumber} onChange={e => setDocumentNumber(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="employee.BirthDate">
+                            <Form.Label>BirthDate</Form.Label>
+                            <Form.Control type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="employee.Email">
                             <Form.Label>Email address</Form.Label>
