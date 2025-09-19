@@ -13,7 +13,7 @@ function Router() {
                 <Route path='/' exact Component={Login}></Route>
                 <Route path='/Employees' exact Component={Employees}></Route>
                 <Route path='/Employees/New' Component={NewEmployee}></Route>
-                <Route path='/Employees/Edit' Component={EditEmployee}></Route>
+                <Route path='/Employees/Edit/:id' Component={EditEmployee}></Route>
             </Routes>
         </BrowserRouter>
     )

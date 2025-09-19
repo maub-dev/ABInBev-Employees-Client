@@ -4,13 +4,14 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import api from '../../services/api';
 
 function Employees() {
     const [employees, setEmployees] = useState([]);
     const accessToken = localStorage.getItem('accessToken');
+    const navigate = useNavigate();
 
     useEffect(() => {
         try {
@@ -67,8 +68,8 @@ function Employees() {
                                     <td>{employee.firstName}</td>
                                     <td>{employee.lastName}</td>
                                     <td>{employee.email}</td>
-                                    <td>
-                                        <Link className='btn btn-primary' to='/employees/edit'>Edit</Link>
+                                    <td className='text-end'>
+                                        <Link className='btn btn-primary me-1' to={{ pathname: `/employees/edit/${employee.id}` }}>Edit</Link>
                                         <Button onClick={() => deleteEmployee(employee.id)}>Delete</Button>
                                     </td>
                                 </tr>)
