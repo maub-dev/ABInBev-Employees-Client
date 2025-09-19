@@ -52,7 +52,6 @@ function NewEmployee() {
                 }
             );
 
-
             navigate('/employees');
 
         } catch (error) {
