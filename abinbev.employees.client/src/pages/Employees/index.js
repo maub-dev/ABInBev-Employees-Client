@@ -28,6 +28,22 @@ function Employees() {
         }
     }, [accessToken]);
 
+    async function deleteEmployee(id) {
+        try {
+            await api.delete(`employee?id=${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+
+            setEmployees(employees.filter(x => x.id !== id));
+        } catch (error) {
+            alert(error.response.data);
+        }
+    }
+
     return (
         <Container>
             <Row>
@@ -47,13 +63,13 @@ function Employees() {
                         </thead>
                         <tbody>
                             {employees.map(employee => {
-                                return (<tr>
+                                return (<tr key={employee.id}>
                                     <td>{employee.firstName}</td>
                                     <td>{employee.lastName}</td>
                                     <td>{employee.email}</td>
                                     <td>
                                         <Link className='btn btn-primary' to='/employees/edit'>Edit</Link>
-                                        <Button>Delete</Button>
+                                        <Button onClick={() => deleteEmployee(employee.id)}>Delete</Button>
                                     </td>
                                 </tr>)
                             })}
