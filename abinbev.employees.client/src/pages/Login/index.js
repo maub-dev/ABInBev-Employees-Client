@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import api from '../../services/api';
+import Api from '../../services/api';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -21,15 +21,12 @@ function Login() {
             password
         };
 
-        try {
-            const response = await api.post('authentication', data);
-
-            localStorage.setItem('accessToken', response.data);
-
-            navigate('/employees')
-        } catch (error) {
-            alert(error.response.data);
-        }
+        Api.AuthenticationApi.login(data).then(response => {
+            if (response.success) {
+                localStorage.setItem('accessToken', response.data);
+                navigate('/employees');
+            }
+        });
     }
 
     return (

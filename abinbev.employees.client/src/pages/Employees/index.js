@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link, useNavigate } from 'react-router-dom';
 
-import api from '../../services/api';
+import Api from '../../services/api';
 
 function Employees() {
     const [employees, setEmployees] = useState([]);
@@ -14,35 +14,19 @@ function Employees() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        try {
-            api.get('employee/all',
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            ).then(response => {
+        Api.EmployeeApi.getAll().then(response => {
+            if (response.success) {
                 setEmployees(response.data);
-            })
-        } catch (error) {
-            alert(error.response.data);
-        }
+            }
+        });
     }, [accessToken]);
 
     async function deleteEmployee(id) {
-        try {
-            await api.delete(`employee?id=${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-
-            setEmployees(employees.filter(x => x.id !== id));
-        } catch (error) {
-            alert(error.response.data);
-        }
+        Api.EmployeeApi.delete(id).then(response => {
+            if (response.success) {
+                setEmployees(employees.filter(x => x.id !== id));
+            }
+        });
     }
 
     return (

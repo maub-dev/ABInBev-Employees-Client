@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import api from '../../../services/api';
+import Api from '../../../services/api';
 
 function EditEmployee() {
     const navigate = useNavigate();
@@ -17,7 +17,6 @@ function EditEmployee() {
     const [documentNumber, setDocumentNumber] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
-    const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
         loadEmployee();
@@ -45,43 +44,19 @@ function EditEmployee() {
             birthDate
         };
 
-        try {
-
-            const accessToken = localStorage.getItem('accessToken');
-
-            await api.put('employee', data,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-
-            navigate('/employees');
-
-        } catch (error) {
-            alert(error.response.data);
-        }
+        Api.EmployeeApi.put(data).then(response => navigate('/employees'));
     }
 
     async function loadEmployee() {
-        try {
-            var response = await api.get(`employee?id=${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            setFirstName(response.data.firstName);
-            setLastName(response.data.lastName);
-            setDocumentNumber(response.data.documentNumber);
-            setBirthDate(response.data.birthDate);
-            setEmail(response.data.email);
-
-        } catch (error) {
-            alert(error);
-        }
+        Api.EmployeeApi.get(id).then(response => {
+            if (response.success) {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setDocumentNumber(response.data.documentNumber);
+                setBirthDate(response.data.birthDate);
+                setEmail(response.data.email);
+            }
+        });
     }
 
     return (

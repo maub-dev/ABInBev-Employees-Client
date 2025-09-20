@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link, useNavigate } from 'react-router-dom';
 
-import api from '../../../services/api';
+import Api from '../../../services/api';
 
 function NewEmployee() {
     const [firstName, setFirstName] = useState('');
@@ -40,23 +40,11 @@ function NewEmployee() {
             birthDate
         };
 
-        try {
-
-            const accessToken = localStorage.getItem('accessToken');
-
-            await api.post('employee', data,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-
-            navigate('/employees');
-
-        } catch (error) {
-            alert(error.response.data);
-        }
+        Api.EmployeeApi.post(data).then(response => {
+            if (response.success) {
+                navigate('/employees');
+            }
+        });
     }
 
     return (
