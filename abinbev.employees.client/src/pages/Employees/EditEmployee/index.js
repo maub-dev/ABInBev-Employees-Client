@@ -17,6 +17,8 @@ function EditEmployee() {
     const [documentNumber, setDocumentNumber] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
+    const [phone1, setPhone1] = useState('');
+    const [phone2, setPhone2] = useState('');
 
     useEffect(() => {
         loadEmployee();
@@ -31,20 +33,16 @@ function EditEmployee() {
             lastName,
             email,
             documentNumber,
-            phonebook: [
-                {
-                    type: 0,
-                    phone: "string"
-                },
-                {
-                    type: 1,
-                    phone: "string"
-                }
-            ],
+            phone1,
+            phone2,
             birthDate
         };
 
-        Api.EmployeeApi.put(data).then(response => navigate('/employees'));
+        Api.EmployeeApi.put(data).then(response => {
+            if (response.success) {
+                navigate('/employees');
+            }
+        });
     }
 
     async function loadEmployee() {
@@ -55,6 +53,8 @@ function EditEmployee() {
                 setDocumentNumber(response.data.documentNumber);
                 setBirthDate(response.data.birthDate);
                 setEmail(response.data.email);
+                setPhone1(response.data.phone1);
+                setPhone2(response.data.phone2);
             }
         });
     }
@@ -81,12 +81,19 @@ function EditEmployee() {
                             <Form.Control type="text" value={documentNumber} onChange={e => setDocumentNumber(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="employee.BirthDate">
-                            <Form.Label>BirthDate</Form.Label>
+                            <Form.Label>Birth Date</Form.Label>
                             <Form.Control type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="employee.Email">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control disabled type="email" value={email} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="employee.Phone1">
+                            <Form.Label>Phone 1</Form.Label>
+                            <Form.Control type="text" value={phone1} onChange={e => setPhone1(e.target.value)} />
+                        </Form.Group><Form.Group className="mb-3" controlId="employee.Phone2">
+                            <Form.Label>Phone 2</Form.Label>
+                            <Form.Control type="text" value={phone2} onChange={e => setPhone2(e.target.value)} />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit

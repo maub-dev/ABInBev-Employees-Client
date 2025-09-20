@@ -4,14 +4,13 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Api from '../../services/api';
 
 function Employees() {
     const [employees, setEmployees] = useState([]);
     const accessToken = localStorage.getItem('accessToken');
-    const navigate = useNavigate();
 
     useEffect(() => {
         Api.EmployeeApi.getAll().then(response => {

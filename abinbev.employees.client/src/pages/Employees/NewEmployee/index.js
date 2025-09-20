@@ -15,6 +15,8 @@ function NewEmployee() {
     const [documentNumber, setDocumentNumber] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [password, setPassword] = useState('');
+    const [phone1, setPhone1] = useState('');
+    const [phone2, setPhone2] = useState('');
 
     const navigate = useNavigate();
 
@@ -26,16 +28,8 @@ function NewEmployee() {
             lastName,
             email,
             documentNumber,
-            phonebook: [
-                {
-                    type: 0,
-                    phone: "string"
-                },
-                {
-                    type: 1,
-                    phone: "string"
-                }
-            ],
+            phone1,
+            phone2,
             password,
             birthDate
         };
@@ -79,6 +73,13 @@ function NewEmployee() {
                         <Form.Group className="mb-3" controlId="employee.Password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="employee.Phone1">
+                            <Form.Label>Phone 1</Form.Label>
+                            <Form.Control type="text" value={phone1} onChange={e => setPhone1(e.target.value)} />
+                        </Form.Group><Form.Group className="mb-3" controlId="employee.Phone2">
+                            <Form.Label>Phone 2</Form.Label>
+                            <Form.Control type="text" value={phone2} onChange={e => setPhone2(e.target.value)} />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
