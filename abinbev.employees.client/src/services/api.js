@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://localhost:32779'
+    baseURL: 'https://localhost:59404'
 });
 
 const successResult = (data) => {
     return { success: true, data };
 };
 const failResult = (error) => {
-    return { success: false, title: error.message, message: error.data };
+    return { success: false, title: error.message, message: error.data, status: error.status };
 };
 
 const EmployeeApi = {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -17,8 +17,20 @@ function NewEmployee() {
     const [password, setPassword] = useState('');
     const [phone1, setPhone1] = useState('');
     const [phone2, setPhone2] = useState('');
+    const [role, setRole] = useState('0');
+    const [managerId, setManagerId] = useState('');
+    const [employees, setEmployees] = useState([]);
+    const accessToken = localStorage.getItem('accessToken');
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        Api.EmployeeApi.getAll().then(response => {
+            if (response.success) {
+                setEmployees(response.data);
+            }
+        });
+    }, [accessToken]);
 
     async function createNewEmployee(e) {
         e.preventDefault();
@@ -31,7 +43,9 @@ function NewEmployee() {
             phone1,
             phone2,
             password,
-            birthDate
+            birthDate,
+            role,
+            managerId
         };
 
         Api.EmployeeApi.post(data).then(response => {
@@ -77,9 +91,28 @@ function NewEmployee() {
                         <Form.Group className="mb-3" controlId="employee.Phone1">
                             <Form.Label>Phone 1</Form.Label>
                             <Form.Control type="text" value={phone1} onChange={e => setPhone1(e.target.value)} />
-                        </Form.Group><Form.Group className="mb-3" controlId="employee.Phone2">
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="employee.Phone2">
                             <Form.Label>Phone 2</Form.Label>
                             <Form.Control type="text" value={phone2} onChange={e => setPhone2(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="employee.Role">
+                            <Form.Label>Role</Form.Label>
+                            <Form.Select value={role} onChange={e => setRole(e.target.value)}>
+                                <option value="0">Employee</option>
+                                <option value="1">Leader</option>
+                                <option value="2">Director</option>
+                                <option value="3">Admin</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="employee.Manager">
+                            <Form.Label>Manager</Form.Label>
+                            <Form.Select value={managerId} onChange={e => setManagerId(e.target.value)}>
+                                <option value={null}></option>
+                                {employees.map(x => {
+                                    return (<option value={x.id}>{x.firstName} {x.lastName}</option>);
+                                })}
+                            </Form.Select>
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
