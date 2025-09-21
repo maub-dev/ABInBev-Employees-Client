@@ -30,7 +30,7 @@ function EditEmployee() {
                 setEmployees(response.data);
             }
         });
-    }, id);
+    }, [id]);
 
     async function editEmployee(e) {
         e.preventDefault();
